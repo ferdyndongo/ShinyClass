@@ -1,0 +1,23 @@
+Package: ShinyClass
+Type: Package
+Title: Classification And Regression Training GUI
+Version: 0.1.0
+Author: Ferdinand Ndongo
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: Graphic User Interface for machine learning algorythms contained in the R package caret.
+    Different datasources can be used as data input for algorythms or for other type of analytics processes such as 
+    exploratory data analysis or graphical data analysis.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    caret,
+    DT,
+    Hmisc,
+    magrittr,
+    readr,
+    readxl,
+    shiny,
+    shinydashboard
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
