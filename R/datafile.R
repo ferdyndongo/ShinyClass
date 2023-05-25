@@ -38,12 +38,13 @@ fileServer <- function(id){
           },warning=function(w){
             shiny::showNotification(w,duration = NULL,closeButton = TRUE,type = "warning")
             output$warning <- shinydashboard::renderMenu({
-              shinydashboard::dropdownMenu(type="notifications", .list=lapply(X = w,FUN = shinydashboard::notificationItem))
+              shinydashboard::dropdownMenu(type="notifications",badgeStatus = "warning", icon = shiny::icon("file"),
+                                           .list=lapply(X = w,FUN = shinydashboard::notificationItem))
             })
           },error=function(e){
             shiny::showNotification(e,duration = NULL,closeButton = TRUE,type = "error")
             output$warning <- shinydashboard::renderMenu({
-              shinydashboard::dropdownMenu(type="notifications",#warn$message
+              shinydashboard::dropdownMenu(type="notifications",badgeStatus = "danger", icon = shiny::icon("file"),
                                            shinydashboard::notificationItem(text = e$message,
                                                                             icon = shiny::icon("warning"),
                                                                             status = "danger")
