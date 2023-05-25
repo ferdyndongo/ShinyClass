@@ -18,7 +18,7 @@ dataVizOutput <- function(id, data) {
 
     output$data <- DT::renderDataTable({
       if(!is.null(data())){
-        if(inherits(data(),"data.frame") &&
+        if(inherits(data(),"data.frame") && dim(data())[1]>0 &&
            apply(X = data(),MARGIN = 2,function(col){is.raw(col[[1]])}) %>% any()){
           data()[1:3]
         }else if(inherits(data(),"data.frame")){
@@ -29,7 +29,7 @@ dataVizOutput <- function(id, data) {
 
     output$model <- shiny::renderPrint({
       if(!is.null(data())){
-        if(inherits(data(),"data.frame") &&
+        if(inherits(data(),"data.frame") && dim(data())[1]>0 &&
            apply(X = data(),MARGIN = 2,function(col){is.raw(col[[1]])}) %>% any()){
           raw_index <- apply(X = data(),MARGIN = 2,function(col){is.raw(col[[1]])}) %>% which()
           model <- unserialize(data()[[raw_index]][[1]])
