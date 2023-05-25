@@ -3,7 +3,8 @@ pkgload::load_all(".")
 
 ui <- shinydashboard::dashboardPage(header=shinydashboard::dashboardHeader(
   title = "Data Overview", titleWidth = 250,
-  disable = FALSE),
+  disable = FALSE,
+  notificationUi("source")),
   sidebar=shinydashboard::dashboardSidebar(fileUi(id = "source"),width = 250),
   body=shinydashboard::dashboardBody(shiny::uiOutput("IO")),
 )
