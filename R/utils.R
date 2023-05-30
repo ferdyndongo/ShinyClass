@@ -36,3 +36,16 @@ load_file <- function(name, path, sheet_name=NULL) {
                shiny::validate("Invalid file; Please upload a .db, .s3db, .csv, .tsv, .txt, .xlsx, .xls, .mdb or .RDS file")
   )
 }
+
+#' Upload data file in sqlite database through available DSN.
+#'
+#' @param dsn data source name
+#' @param data data to be uploaded in the database
+#' @param tablename data base table name
+#' @param overwrite boolean value overwriting or not an existing table
+#' @param append boolean value updating an existing table. If equals FALSE a new table is created
+file_to_sqlite_dsn <- function(dsn, data, tablename, overwrite=FALSE, append=TRUE){
+  db <- DBI::dbConnect(odbc::odbc(), dsn)
+  odbc::dbWriteTable(conn = db, name =  tablename, value = data,overwrite=overwrite,append=append)
+  odbc::dbDisconnect(db)
+}
