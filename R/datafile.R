@@ -4,7 +4,7 @@
 fileUi <- function(id){
   shiny::tagList(
     shiny::fileInput(shiny::NS(id,"file_load"),label = NULL,
-    accept = c(".mdb", ".xls", ".xlsx", ".csv", ".tsv", ".txt", ".RDS")
+    accept = c(".mdb", ".xls", ".xlsx", ".csv", ".tsv", ".txt", ".RDS", ".db", ".s3db")
                      ),
     shiny::uiOutput(shiny::NS(id,"file_tables")
                     )
@@ -19,7 +19,7 @@ fileServer <- function(id){
 
     table_list <- shiny::reactive({
       shiny::req(input$file_load$name, input$file_load$datapath)
-      if(tools::file_ext(input$file_load$name) %in% c("xls","xlsx","mdb")){
+      if(tools::file_ext(input$file_load$name) %in% c("xls","xlsx","mdb", "db", "s3db")){
         sheet_list(input$file_load$name, input$file_load$datapath)
       }
     })
