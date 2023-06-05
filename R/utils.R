@@ -5,14 +5,17 @@
 #' @return a character vector of table names or sheet names
 sheet_list <- function(name, path){
   ext <- tools::file_ext(name)
-  base::switch(ext,
+  if (ext %in% c("db", "s3db")) con <- RSQLite::dbConnect(drv = RSQLite::SQLite(),dbname=path)
+  list_tables <- base::switch(ext,
                xls = readxl::excel_sheets(path = path),
                xlsx = readxl::excel_sheets(path = path),
                mdb = Hmisc::mdb.get(file = path,tables = TRUE),
-               db = RSQLite::dbListTables(conn = RSQLite::dbConnect(drv = RSQLite::SQLite(), dbname=path)),
-               s3db = RSQLite::dbListTables(conn = RSQLite::dbConnect(drv = RSQLite::SQLite(), dbname=path)),
+               db = RSQLite::dbListTables(conn = con, dbname=path),
+               s3db = RSQLite::dbListTables(conn = con),
                shiny::validate("Invalid file; Please upload a .db, .s3db, .mdb, .xlsx or .xls file")
   )
+  if (ext %in% c("db", "s3db")) RSQLite::dbDisconnect(con)
+  return(list_tables)
 }
 
 #' Read data from file with extension db, s3db, xls, xlsx, mdb, csv, txt, tsv and RDS
@@ -23,7 +26,8 @@ sheet_list <- function(name, path){
 #' @return a saved model of class train.formula from caret package if it is RDS file otherwise a dataframe
 load_file <- function(name, path, sheet_name=NULL) {
   ext <- tools::file_ext(name)
-  base::switch(ext,
+  if (ext %in% c("db", "s3db")) con <- RSQLite::dbConnect(drv = RSQLite::SQLite(),dbname=path)
+  dati <- base::switch(ext,
                xls = readxl::read_excel(path = path,sheet = sheet_name),
                xlsx = readxl::read_excel(path = path,sheet = sheet_name),
                csv = readr::read_csv(file = path),
@@ -31,10 +35,13 @@ load_file <- function(name, path, sheet_name=NULL) {
                tsv = utils::read.table(file = path, header = TRUE),
                mdb = Hmisc::mdb.get(file = path,tables = sheet_name),
                RDS = base::readRDS(file = path),
-               db = RSQLite::dbReadTable(conn = RSQLite::dbConnect(drv = RSQLite::SQLite(),dbname=path),name = sheet_name),
-               s3db = RSQLite::dbReadTable(conn = RSQLite::dbConnect(drv = RSQLite::SQLite(),dbname=path),name = sheet_name),
+               db = RSQLite::dbReadTable(conn = con, name = sheet_name),
+               s3db = RSQLite::dbReadTable(conn = con, name = sheet_name),
                shiny::validate("Invalid file; Please upload a .db, .s3db, .csv, .tsv, .txt, .xlsx, .xls, .mdb or .RDS file")
   )
+  if (ext %in% c("db", "s3db")) RSQLite::dbDisconnect(con)
+  return(dati)
+
 }
 
 #' Upload data file in sqlite database through available DSN.
