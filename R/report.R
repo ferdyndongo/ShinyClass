@@ -30,7 +30,7 @@ reportServer <- function(id, report_script){
         id <- shiny::showNotification("Rendering report ...", duration = NULL, closeButton = FALSE)
         base::on.exit(shiny::removeNotification(id), add = TRUE)
 
-        render(input = paste(report_script, "Rmd",sep = "."),
+        rmarkdown::render(input = paste(report_script, "Rmd",sep = "."),
                output_format = rmarkdown::html_notebook(),
                # switch(input$format,
                #                      RNotebook=rmarkdown::html_notebook(),
