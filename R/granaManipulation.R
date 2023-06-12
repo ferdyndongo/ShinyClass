@@ -1,13 +1,24 @@
 #' Rename variable names
 #' @param data dataframe
 rename_data <- function(data){
-  data %>% dplyr::rename(anno=colnames(data[1]), numero=colnames(data[2]), matricola=colnames(data[3]),
-                         class=colnames(data[4]), "d13C"=colnames(data[5]), "d15N"=colnames(data[6]),
-                         "d2H"=colnames(data[7]),"Li"=colnames(data[8]),  "Na"=colnames(data[9]),
-                         "Mn"=colnames(data[10]), "Fe"=colnames(data[11]), "Cu"=colnames(data[12]),
-                         "Se"=colnames(data[13]), "Rb"=colnames(data[14]), "Sr"=colnames(data[15]),
-                         "Mo"=colnames(data[16]), "Ba"=colnames(data[17]), "Re"=colnames(data[18]),
-                         "Bi"=colnames(data[19]), "U"=colnames(data[20]))
+  if(dim(data)[2]==20){
+    data %>% dplyr::rename(anno=colnames(data[1]), numero=colnames(data[2]), matricola=colnames(data[3]),
+                           class=colnames(data[4]), "d13C"=colnames(data[5]), "d15N"=colnames(data[6]),
+                           "d2H"=colnames(data[7]),"Li"=colnames(data[8]),  "Na"=colnames(data[9]),
+                           "Mn"=colnames(data[10]), "Fe"=colnames(data[11]), "Cu"=colnames(data[12]),
+                           "Se"=colnames(data[13]), "Rb"=colnames(data[14]), "Sr"=colnames(data[15]),
+                           "Mo"=colnames(data[16]), "Ba"=colnames(data[17]), "Re"=colnames(data[18]),
+                           "Bi"=colnames(data[19]), "U"=colnames(data[20]))
+  }else if(dim(data)[2]==19){
+    data %>% dplyr::rename(anno=colnames(data[1]), numero=colnames(data[2]), matricola=colnames(data[3]),
+                           "d13C"=colnames(data[4]), "d15N"=colnames(data[5]),
+                           "d2H"=colnames(data[6]),"Li"=colnames(data[7]),  "Na"=colnames(data[8]),
+                           "Mn"=colnames(data[9]), "Fe"=colnames(data[10]), "Cu"=colnames(data[11]),
+                           "Se"=colnames(data[12]), "Rb"=colnames(data[13]), "Sr"=colnames(data[14]),
+                           "Mo"=colnames(data[15]), "Ba"=colnames(data[16]), "Re"=colnames(data[17]),
+                           "Bi"=colnames(data[18]), "U"=colnames(data[19]))
+  }
+
 }
 
 #' Convert data variables to the right data type

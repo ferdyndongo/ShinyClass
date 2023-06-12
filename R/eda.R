@@ -1,7 +1,6 @@
 #' User interface container for descriptive statistics output
 #'
 #' @param id identifier for the data module
-#' @export
 #'
 edaUi <- function(id){
   shiny::tagList(
@@ -21,7 +20,6 @@ edaUi <- function(id){
 #' Visualize overview of data and descriptive statistics in the edaUi
 #' @param id identifier of the data module
 #' @param data output of the dataImport
-#' @export
 #'@importFrom skimr skim_with sfl
 
 edaOutput <- function(id, data){
@@ -35,7 +33,9 @@ edaOutput <- function(id, data){
             if(all(input$catVar=="")){
               n_LoD(data())
             }else if(all(input$catVar!="") & length(input$catVar)==1){
-              n_LoD(data() %>% dplyr::group_by(.data[[input$catVar[1]]]))
+              if(input$catVar %in% names(data())){
+                n_LoD(data() %>% dplyr::group_by(.data[[input$catVar[1]]]))
+              }
             }
           }
         }
