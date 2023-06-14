@@ -20,8 +20,8 @@ edaUi <- function(id){
 #' Visualize overview of data and descriptive statistics in the edaUi
 #' @param id identifier of the data module
 #' @param data output of the dataImport
-#'@importFrom skimr skim_with sfl
-
+#' @importFrom skimr skim_with sfl
+#' @importFrom rlang .data
 edaOutput <- function(id, data){
   shiny::moduleServer(id, function(input, output, session){
 
