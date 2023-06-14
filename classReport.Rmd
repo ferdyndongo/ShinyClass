@@ -1,0 +1,28 @@
+---
+title: "Classification Model Training Report"
+date: "`r Sys.Date()`"
+params:
+ input: NA
+---
+
+# DATA OVERVIEW
+```{r view_data, echo=FALSE}
+input <- params$input
+data <- fileServer(id = "source")
+data()
+```
+
+
+```{r fit_model, echo=FALSE}
+fitted_model <- classModelServer("source", data)()
+```
+
+# FITTED MODEL
+```{r model, echo=FALSE}
+fitted_model$finalModel
+```
+
+# MODEL METRICS
+```{r model_metrics, echo=FALSE}
+caret::print.train(fitted_model)
+```
