@@ -50,13 +50,13 @@ writeToSQLiteDSN <- function(id, dat){
             shiny::showNotification(w,duration = NULL,closeButton = TRUE,type = "warning")
             output$warning <- shinydashboard::renderMenu({
               shinydashboard::dropdownMenu(type="notifications", badgeStatus = "warning",icon = shiny::icon("upload"),
-                                           .list=lapply(X = w,FUN = notificationItem))
+                                           .list=lapply(X = w,FUN = shinydashboard::notificationItem))
             })
           },error=function(e){
             shiny::showNotification(e,duration = NULL,closeButton = TRUE,type = "error")
             output$warning <- shinydashboard::renderMenu({
               shinydashboard::dropdownMenu(type="notifications", badgeStatus = "danger",icon = shiny::icon("upload"),
-                                           .list=lapply(X = e,FUN = notificationItem)
+                                           .list=lapply(X = e,FUN = shinydashboard::notificationItem)
                                            # shinydashboard::notificationItem(text = e$message,
                                            #                                  icon = shiny::icon("upload"),
                                            #                                  status = "danger")
@@ -74,7 +74,7 @@ writeToSQLiteDSN <- function(id, dat){
             shiny::showNotification(w,duration = NULL,closeButton = TRUE,type = "warning")
             output$warning <- shinydashboard::renderMenu({
               shinydashboard::dropdownMenu(type="notifications", badgeStatus = "warning",icon = shiny::icon("upload"),
-                                           .list=lapply(X = w,FUN = notificationItem))
+                                           .list=lapply(X = w,FUN = shinydashboard::notificationItem))
             })
           },error=function(e){
             shiny::showNotification(e,duration = NULL,closeButton = TRUE,type = "error")
