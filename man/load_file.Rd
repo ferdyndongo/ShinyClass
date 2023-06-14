@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{load_file}
 \alias{load_file}
-\title{Read data from file with extension xls, xlsx, mdb, csv, txt, tsv and RDS}
+\title{Read data from file with extension db, s3db, xls, xlsx, mdb, csv, txt, tsv and RDS}
 \usage{
 load_file(name, path, sheet_name = NULL)
 }
@@ -11,11 +11,11 @@ load_file(name, path, sheet_name = NULL)
 
 \item{path}{full path of file}
 
-\item{sheet_name}{sheet name or table name if the file is excel or microsoft access, otherwise is set to NULL for txt, csv, tsv and RDS files}
+\item{sheet_name}{sheet name or table name if the file is excel, microsoft access or sqlite db file, otherwise is set to NULL for txt, csv, tsv and RDS files}
 }
 \value{
 a saved model of class train.formula from caret package if it is RDS file otherwise a dataframe
 }
 \description{
-Read data from file with extension xls, xlsx, mdb, csv, txt, tsv and RDS
+Read data from file with extension db, s3db, xls, xlsx, mdb, csv, txt, tsv and RDS
 }
