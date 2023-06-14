@@ -16,11 +16,11 @@ notificationServer <- function(id,expr){
       expr
     },warning=function(w){
       output$warning <- shinydashboard::renderMenu({
-        shinydashboard::dropdownMenu(type="notifications", .list=lapply(X = w,FUN = notificationItem))
+        shinydashboard::dropdownMenu(type="notifications", .list=lapply(X = w,FUN = shinydashboard::notificationItem))
       })
     },error=function(e){
       output$warning <- shinydashboard::renderMenu({
-        shinydashboard::dropdownMenu(type="notifications", .list=lapply(X = e,FUN = notificationItem))
+        shinydashboard::dropdownMenu(type="notifications", .list=lapply(X = e,FUN = shinydashboard::notificationItem))
       })
     })
 
