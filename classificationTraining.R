@@ -41,12 +41,12 @@ server <- function(input, output, session){
     shiny::req(fitted_model())
     shiny::tagList(
       trainingUi("source"),
-      reportUi("source"),
+      # reportUi("source"),
       downloadUi("source")
     )
   })
   trainingOutput("source",fitted_model)
-  reportServer(id = "source",report_script = "classReport")
+  # reportServer(id = "source",report_script = "classReport")
   filedownServer("source",fitted_model)
 }
 
