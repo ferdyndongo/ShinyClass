@@ -2,3 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+quack.db
+utDB.db
+wineDB.db
+Driver={SQLite3};
+Driver={SQLite3};server=172.17.0.1
+granaDB.db
