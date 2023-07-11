@@ -20,7 +20,8 @@ fit_class <- function(data, catVar, model){
 #' @param id module identifier
 classModelUi <- function(id){
   shiny::selectInput(shiny::NS(id,"caretModel"),label = "Choose a classification model",
-                     choices = c("", "rf", "lda", "pls", "gbm", "xgbTree"),
+                     # choices = c("", "rf", "lda", "pls", "gbm", "xgbTree"),
+                     choices = c("", names(lapply(X = caret::getModelInfo(),FUN = function(x) any(x[["type"]]=="Classification")))),
                      selected = NULL,selectize = FALSE)
 }
 
