@@ -19,8 +19,7 @@ fit_class <- function(data, catVar, model){
         caret::train(formula(paste(catVar,"~ .")), data, method=model, trControl=ctrl_fit, na.action=na.omit)
       },error=function(e){
         shiny::showNotification(e$message,duration = NULL,closeButton = TRUE,type = "error")
-        set.seed(1234)
-        caret::train(formula(paste(catVar,"~ .")), data, method=model, trControl=ctrl_fit, na.action=na.omit)
+        return(NULL)
       })
 
     }
@@ -32,8 +31,8 @@ fit_class <- function(data, catVar, model){
 #' @param id module identifier
 classModelUi <- function(id){
   shiny::selectInput(shiny::NS(id,"caretModel"),label = "Choose a classification model",
-                     # choices = c("", "rf", "lda", "pls", "gbm", "xgbTree"),
-                     choices = c("", names(lapply(X = caret::getModelInfo(),FUN = function(x) any(x[["type"]]=="Classification")))),
+                     choices = c("", "rf", "gbm", "xgbTree"),
+                     # choices = c("", names(lapply(X = caret::getModelInfo(),FUN = function(x) any(x[["type"]]=="Classification")))),
                      selected = NULL,selectize = FALSE)
 }
 

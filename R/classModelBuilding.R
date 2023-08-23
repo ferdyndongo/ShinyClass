@@ -57,8 +57,10 @@ TrainTestModelServer <- function(id, data){
         id <- shiny::showNotification("MODEL TRAINGING IN PROGRESS ...", duration = NULL, closeButton = FALSE)
         base::on.exit(shiny::removeNotification(id), add = TRUE)
         fitted_model <- fit_class(data = trainSample(), catVar = input$catVar, model=input$caretModel)
-        colnames(fitted_model$trainingData)[which(colnames(fitted_model$trainingData)==".outcome")] <- input$catVar
-        fitted_model
+        if(!is.null(fitted_model)){
+          colnames(fitted_model$trainingData)[which(colnames(fitted_model$trainingData)==".outcome")] <- input$catVar
+          fitted_model
+        }
 
       }
     })
