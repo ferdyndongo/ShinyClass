@@ -1,4 +1,4 @@
-#' Fit and train some classification models
+#' Fit and train classification models using R the caret package.
 #' @param data a dataset with explanatory variables and response variable
 #' @param catVar the response variable
 #' @param model string specifiying which classification model will be used.
@@ -9,8 +9,20 @@ fit_class <- function(data, catVar, model){
     if(catVar %in% colnames(data)){
       data <- data %>% dplyr::select(dplyr::all_of(c(numericDataset(data) %>% colnames(),catVar)))
       ctrl_fit <- caret::trainControl(method = "repeatedcv",number = 10,repeats = 5,p = 0.75)
-      set.seed(1234)
-      caret::train(formula(paste(catVar,"~ .")), data, method=model, trControl=ctrl_fit,verbosity=0)
+
+      tryCatch({
+        set.seed(1234)
+        caret::train(formula(paste(catVar,"~ .")), data, method=model, trControl=ctrl_fit)
+      },warning=function(w){
+        shiny::showNotification(w$message,duration = NULL,closeButton = TRUE,type = "warning")
+        set.seed(1234)
+        caret::train(formula(paste(catVar,"~ .")), data, method=model, trControl=ctrl_fit, na.action=na.omit)
+      },error=function(e){
+        shiny::showNotification(e$message,duration = NULL,closeButton = TRUE,type = "error")
+        set.seed(1234)
+        caret::train(formula(paste(catVar,"~ .")), data, method=model, trControl=ctrl_fit, na.action=na.omit)
+      })
+
     }
   }
 }
@@ -25,8 +37,7 @@ classModelUi <- function(id){
                      selected = NULL,selectize = FALSE)
 }
 
-#' compute classification models such as Random Forest, Linear Discriminant Analysis,
-#' Partial Least Squares, Stochastic Gradient Boosting and  eXtreme Gradient Boosting.
+#' compute classification models contained in caret R package.
 #' @param id module identifier
 #' @param data training data used by models
 classModelServer <- function(id, data){
