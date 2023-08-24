@@ -19,6 +19,7 @@ Imports:
     magrittr,
     odbc,
     purrr,
+    randomForest,
     readr,
     readxl,
     rlang,
@@ -29,7 +30,6 @@ Imports:
     skimr,
     stringr
 Suggests:
-  randomForest,
    WriteXLS,
    writexl
 Roxygen: list(markdown = TRUE)
