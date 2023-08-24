@@ -27,7 +27,10 @@ Imports:
     shiny,
     shinydashboard,
     skimr,
-    stringr,
-    WriteXLS
+    stringr
+Suggests:
+  randomForest,
+   WriteXLS,
+   writexl
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
