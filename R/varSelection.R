@@ -42,6 +42,34 @@ catVarServer <- function(id, data){
   })
 }
 
+#' SelectInput object with factor or character variables. It is the UI for catVarserver and they are linked by id.
+#' @param id module identifier
+catVarValueUi <- function(id){
+  shiny::selectInput(shiny::NS(id,"catVarValue"),label = "", choices = NULL, selected = NULL, selectize = FALSE )
+}
+
+#' Server for catVarUi. Fills the catVarUi with the categorical variable names.
+#' @param id module identifier
+#' @param data data where the categorical variable names are found
+catVarValueServer <- function(id, data){
+  shiny::moduleServer(id, function(input, output, session){
+    catVarVal <- shiny::reactive({
+      shiny::req(data(), input$catVar)
+      if( !(is.null(data()) | is.null(input$catVar)) ){
+        if(inherits(data()[[input$catVar]],"factor")){
+          levels(data()[[input$catVar]])
+        }else if(inherits(data()[[input$catVar]],"character")){
+          unique(data()[[input$catVar]])
+        }
+      }
+    })
+    shiny::observeEvent(catVarVal(),{
+      shiny::req(input$catVar)
+      shiny::updateSelectInput(inputId = "catVarValue",label = paste0("Choose one ",input$catVar), choices = c("",catVarVal()),selected = "")
+    })
+  })
+}
+
 
 #' Input module for variable selection in a dataset
 #' @param id identifier of module object
