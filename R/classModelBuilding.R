@@ -50,9 +50,22 @@ TrainTestModelServer <- function(id, data){
       data()[-trainIndex(),]
     })
 
+    model_available <- shiny::reactive({
+      shiny::req(input$catVar, input$caretModel)
+      if(all(caret::getModelInfo()[[input$caretModel]]$library %in% installed.packages())){
+        TRUE
+      }else{
+        not_installed_index <- which(!(caret::getModelInfo()[[input$caretModel]]$library %in% installed.packages()))
+        not_installed_library <- caret::getModelInfo()[[input$caretModel]]$library[not_installed_index]
+        msg <- paste0("Required packages are missing: ", paste0(not_installed_library,collapse = ", "))
+        shiny::showNotification(msg,duration = NULL,closeButton = TRUE,type = "error")
+        FALSE
+      }
+    })
+
     model <- shiny::reactive({
       shiny::req(trainSample())
-      if(!is.null(trainSample())){
+      if(!is.null(trainSample()) && model_available()){
         shiny::req(input$catVar, input$caretModel)
         id <- shiny::showNotification("MODEL TRAINGING IN PROGRESS ...", duration = NULL, closeButton = FALSE)
         base::on.exit(shiny::removeNotification(id), add = TRUE)
