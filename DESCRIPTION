@@ -19,7 +19,6 @@ Imports:
     magrittr,
     odbc,
     purrr,
-    randomForest,
     readr,
     readxl,
     rlang,
