@@ -3,7 +3,7 @@
 #' @param catVar the response variable
 #' @param model string specifiying which classification model will be used.
 #' @return a trained and fitted classification model
-#' @importFrom stats formula
+#' @importFrom stats formula na.omit
 fit_class <- function(data, catVar, model){
   if(!( is.null(data) | is.null(catVar) | is.null(model) )){
     if(catVar %in% colnames(data)){
