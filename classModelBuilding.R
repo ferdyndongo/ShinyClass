@@ -1,5 +1,7 @@
 options(shiny.maxRequestSize = 900 * 1024^2)
-pkgload::load_all(".")
+
+library(ShinyClass)
+
 ui <- shinydashboard::dashboardPage(title = "CLASSIFICATION MODEL TRAINING",
                                     header=shinydashboard::dashboardHeader(title = "TRAINING/TEST",
                                                                            disable = FALSE,
@@ -24,7 +26,7 @@ server <- function(input, output, session){
       }
     }
   })
-  # data <- fileServer(id = "source")
+
   shiny::observeEvent(data(),{
     dataVizOutput("overview",data)
   })
@@ -43,40 +45,16 @@ server <- function(input, output, session){
     classModelUi("source")
   })
 
-  model_available <- shiny::reactive({
-    shiny::req(data(), input$`source-catVar`, input$`source-caretModel`)
-    if(all(caret::getModelInfo()[[input$`source-caretModel`]]$library %in% installed.packages())){
-      TRUE
-    }else{
-      not_installed_index <- which(!(caret::getModelInfo()[[input$`source-caretModel`]]$library %in% installed.packages()))
-      not_installed_library <- caret::getModelInfo()[[input$`source-caretModel`]]$library[not_installed_index]
-      msg <- paste0("Required packages are missing: ", paste0(not_installed_library,collapse = ", "))
-      shiny::showNotification(msg,duration = NULL,closeButton = TRUE,type = "error")
-      FALSE
-    }
-  })
+  result <- TrainTestModelServer("source", data)
 
-  shiny::observeEvent(model_available(),{
-    if(model_available()){
-      result <- TrainTestModelServer("source", data)
-      output$TrainTest <- shiny::renderUI({
-        shiny::req(data(), input$`source-catVar`, input$`source-caretModel`,result)
-        TrainTestModelUi("source")
-      })
-      TrainTestModelOutput("source", result)
-      filedownServer("source",result$model)
-    }
+  shiny::observeEvent(result,{
+    output$TrainTest <- shiny::renderUI({
+      shiny::req(data(), input$`source-catVar`, input$`source-caretModel`,result)
+      TrainTestModelUi("source")
+    })
+    TrainTestModelOutput("source", result)
+    filedownServer("source",result$model)
   })
-
-  # result <- TrainTestModelServer("source", data)
-  # shiny::observeEvent(result,{
-  #   output$TrainTest <- shiny::renderUI({
-  #     shiny::req(data(), input$`source-catVar`, input$`source-caretModel`,result)
-  #     TrainTestModelUi("source")
-  #   })
-  #   TrainTestModelOutput("source", result)
-  #   filedownServer("source",result$model)
-  # })
 
 }
 
