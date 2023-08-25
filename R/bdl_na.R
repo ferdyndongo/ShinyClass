@@ -109,6 +109,8 @@ impute_bDL <- function(data){
 #' @param name variable name of the character vector
 n_missing <- function(name){sum(is.na(name))}
 
+not_NA <- function(name){sum(!is.na(name))}
+
 #' Count the number of missing values and/or values below the detection limit in a vector
 #' @param name variable name of the character vector
 n_missing_bDL <- function(name){
