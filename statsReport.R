@@ -11,7 +11,7 @@ body=shinydashboard::dashboardBody(shiny::uiOutput("rawOutput"))
 
 server <- function(input, output, session){
 
-  data <- GranaClassifier:::fileServer(id = "source")
+  data <- ShinyClass:::fileServer(id = "source")
 
   output$target <- shiny::renderUI({
     shiny::req(data())
