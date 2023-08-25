@@ -1419,11 +1419,6 @@
       ],
       "Hash": "1cba04a4e9414bdefc9dcaa99649a8dc"
     },
-    "randomForest": {
-      "Package": "randomForest",
-      "Version": "4.7.1.1",
-      "Source": "Repository"
-    },
     "rappdirs": {
       "Package": "rappdirs",
       "Version": "0.3.3",
@@ -2018,11 +2013,6 @@
         "tools"
       ],
       "Hash": "be07d23211245fc7d4209f54c4e4ffc8"
-    },
-    "xgboost": {
-      "Package": "xgboost",
-      "Version": "1.7.5.1",
-      "Source": "Repository"
     },
     "xtable": {
       "Package": "xtable",
