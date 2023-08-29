@@ -179,11 +179,6 @@ TrainTestModelOutput <- function(id, data){
       }
     })
 
-
-    return(list(model=shiny::reactive(model()),
-                pred=shiny::reactive(pred()))
-    )
-
   })
 }
 
