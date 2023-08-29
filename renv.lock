@@ -1493,7 +1493,7 @@
     },
     "recipes": {
       "Package": "recipes",
-      "Version": "1.0.7",
+      "Version": "1.0.8",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
@@ -1522,7 +1522,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "b42e81a1748ec8d2e19905eeb641fa4c"
+      "Hash": "d146b858006ebd52e1fe215ee774e3d5"
     },
     "rematch": {
       "Package": "rematch",
