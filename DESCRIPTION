@@ -15,10 +15,12 @@ Imports:
     DBI,
     dplyr,
     DT,
+    gbm,
     Hmisc,
     magrittr,
     odbc,
     purrr,
+    randomForest,
     readr,
     readxl,
     rlang,
@@ -27,12 +29,10 @@ Imports:
     shiny,
     shinydashboard,
     skimr,
-    stringr
+    stringr,
+    xgboost
 Suggests:
-  gbm,
-  randomForest,
   tibble,
-  xgboost,
   WriteXLS
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
