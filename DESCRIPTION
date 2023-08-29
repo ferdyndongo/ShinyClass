@@ -30,9 +30,9 @@ Imports:
     shinydashboard,
     skimr,
     stringr,
+    WriteXLS,
     xgboost
 Suggests:
-  tibble,
-  WriteXLS
+  tibble
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
