@@ -52,10 +52,10 @@ TrainTestModelServer <- function(id, data){
 
     model_available <- shiny::reactive({
       shiny::req(input$catVar, input$caretModel)
-      if(all(caret::getModelInfo()[[input$caretModel]]$library %in% installed.packages())){
+      if(all(caret::getModelInfo()[[input$caretModel]]$library %in% utils::installed.packages())){
         TRUE
       }else{
-        not_installed_index <- which(!(caret::getModelInfo()[[input$caretModel]]$library %in% installed.packages()))
+        not_installed_index <- which(!(caret::getModelInfo()[[input$caretModel]]$library %in% utils::installed.packages()))
         not_installed_library <- caret::getModelInfo()[[input$caretModel]]$library[not_installed_index]
         msg <- paste0("Required packages are missing: ", paste0(not_installed_library,collapse = ", "))
         shiny::showNotification(msg,duration = NULL,closeButton = TRUE,type = "error")
