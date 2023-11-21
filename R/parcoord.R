@@ -30,20 +30,56 @@ parallel_coordinate_plot <- function(data, numVar=NULL, catVar=NULL, var=NULL){
 #' @param id module identifier
 parcoordUi <- function(id){
   shiny::tagList(
-    shiny::uiOutput(outputId = shiny::NS(id,"uniParcoord"), width = "100%", height = "800px"),
-    shiny::uiOutput(outputId = shiny::NS(id, "multiPlot"), width = "100%", height = "800px")
+    shiny::plotOutput(outputId = shiny::NS(id,"uniParcoord"), width = "100%", height = "800px"),
+    shiny::uiOutput(outputId = shiny::NS(id, "multiPlot"))
   )
 }
 
 uniParcoordServer <- function(id, data) {
   shiny::moduleServer(id, function(input, output, session) {
 
-    output$uniParcoord <- shiny::renderUI({
+    uniParcoord <- shiny::reactive({
       if(length(input$catVar)==1){
-        shiny::renderPlot({
-          parallel_coordinate_plot(data(), input$numVar, input$catVar)
-        },res = 96)
+        parallel_coordinate_plot(data(), input$numVar, input$catVar)
       }
     })
+    output$uniParcoord <- shiny::renderPlot({
+      shiny::req(uniParcoord())
+      uniParcoord() + ggplot2::geom_text(mapping = ggplot2::aes(x = uniParcoord()$data$variable,
+                                              y = round(uniParcoord()$data$value,2),label=uniParcoord()$data$.ID))
+    })
+
+  })
+}
+
+#' Server module rendering a parallel plot coordinate. It can be linked with parcoordUi by id.
+#' @param id identifier of the module
+#' @param data dataframe
+
+multiplotOutput <- function(id, data) {
+  shiny::moduleServer(id, function(input, output, session) {
+
+    catVar <- shiny::reactive({
+      if(base::all(input$catVar=="")){
+        "noClass"
+      }else if(base::all(input$catVar!="")){
+        if(any(is.na(unique(data()[[input$catVar[1]]])))){
+          shiny::showNotification(paste0("ERROR !!!: missing values in variable ", input$catVar),duration = NULL,closeButton = TRUE,type = "error")
+          unique(data()[[input$catVar[1]]])[!is.na(unique(data()[[input$catVar[1]]]))]
+        }else if(all(!is.na(unique(data()[[input$catVar[1]]])))){
+          unique(data()[[input$catVar[1]]])
+        }
+
+      }
+    })
+
+    output$multiPlot <- shiny::renderUI({
+      shiny::req(catVar(), input$catVar)
+      if(length(input$catVar)==1 | length(input$catVar)==2){
+        purrr::map(catVar(), shiny::plotOutput)
+      }
+    })
+
+    return(shiny::reactive(catVar()))
   })
 }
