@@ -15,6 +15,7 @@ Imports:
     DBI,
     dplyr,
     DT,
+    factoextra,
     GGally,
     ggplot2,
     Hmisc,
@@ -33,7 +34,6 @@ Imports:
     stringr,
     visdat
 Suggests:
-  factoextra,
   tibble,
   WriteXLS
 Roxygen: list(markdown = TRUE)
