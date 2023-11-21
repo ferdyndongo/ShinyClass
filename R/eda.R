@@ -50,8 +50,8 @@ edaOutput <- function(id, data){
     })
 
     output$sample_na <- shiny::renderPlot({
-      shiny::req(used_data())
-      visdat::vis_dat(used_data())
+      shiny::req(data())
+      visdat::vis_dat(data())
     })
 
     output$na <- shiny::renderPrint({
