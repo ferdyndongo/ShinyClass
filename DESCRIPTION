@@ -30,11 +30,11 @@ Imports:
     shiny,
     shinydashboard,
     skimr,
-    stringr
+    stringr,
+    visdat
 Suggests:
   factoextra,
   tibble,
-  WriteXLS,
-  visdat
+  WriteXLS
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
