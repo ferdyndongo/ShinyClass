@@ -7,6 +7,7 @@ edaUi <- function(id){
     shiny::h3("Descriptive Stats by variable"),
     shiny::verbatimTextOutput(shiny::NS(id,"stats")),
     shiny::h3("Number of missing values by record"),
+    shiny::plotOutput(outputId = shiny::NS(id,"sample_na"),width = "100%",height = "800px"),
     shiny::verbatimTextOutput(shiny::NS(id,"na")),
     DT::dataTableOutput(shiny::NS(id,"na_data")),
     shiny::h3("Number of Below Detection Limit missingness by record"),
@@ -47,6 +48,12 @@ edaOutput <- function(id, data){
         apply(X = data(),MARGIN = 1,FUN = n_missing)
       }
     })
+
+    output$sample_na <- shiny::renderPlot({
+      shiny::req(used_data())
+      visdat::vis_dat(used_data())
+    })
+
     output$na <- shiny::renderPrint({
       if(inherits(data(),"data.frame") && apply(X = data(),MARGIN = 2,function(col){!is.raw(col[[1]])}) %>% all()){
         if(!is.null(n_mis())){
