@@ -2,8 +2,7 @@
 % Please edit documentation in R/classModels.R
 \name{classModelServer}
 \alias{classModelServer}
-\title{compute classification models such as Random Forest, Linear Discriminant Analysis,
-Partial Least Squares, Stochastic Gradient Boosting and  eXtreme Gradient Boosting.}
+\title{compute classification models contained in caret R package.}
 \usage{
 classModelServer(id, data)
 }
@@ -13,6 +12,5 @@ classModelServer(id, data)
 \item{data}{training data used by models}
 }
 \description{
-compute classification models such as Random Forest, Linear Discriminant Analysis,
-Partial Least Squares, Stochastic Gradient Boosting and  eXtreme Gradient Boosting.
+compute classification models contained in caret R package.
 }

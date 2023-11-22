@@ -2,7 +2,7 @@
 % Please edit documentation in R/classModels.R
 \name{fit_class}
 \alias{fit_class}
-\title{Fit and train some classification models}
+\title{Fit and train classification models using R the caret package.}
 \usage{
 fit_class(data, catVar, model)
 }
@@ -17,5 +17,5 @@ fit_class(data, catVar, model)
 a trained and fitted classification model
 }
 \description{
-Fit and train some classification models
+Fit and train classification models using R the caret package.
 }
